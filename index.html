@@ -1,263 +1,355 @@
 
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My PhotoBooth</title>
 <style>
-.template-gallery {
- display:grid;
- grid-template-columns:repeat(5,1fr);
- gap:25px;
-}
-.template-card {
- position:relative;
- cursor:pointer;
- text-align:center;
- padding:12px 5px;
- border-radius:12px;
-}
-.template-card.selected {
- background:#ffe0eb;
- outline:2px solid #f45d88;
-}
-.template-card h4 {font-size:11px;margin-top:12px}
-.template-card small {font-size:10px;color:#888}
-.frame {
- width:76px;
- height:165px;
- margin:auto;
- padding:7px;
- display:flex;
- flex-direction:column;
- gap:5px;
- position:relative;
- overflow:hidden;
-}
-.frame .slot {
- flex:1;
- background:linear-gradient(135deg,#d8e8e9,#fff);
- border:1px solid #ffffffaa;
- position:relative;
-}
-.frame .slot:after {
- content:"";
- position:absolute;
- width:100%;
- height:20%;
- bottom:0;
- background:linear-gradient(transparent,#ffffff55);
-}
-.devil {
- background:repeating-linear-gradient(45deg,#170d16,#170d16 8px,#431329 8px,#431329 16px);
- border:3px solid #f52c67;
-}
-.devil:before {
- content:"DEVILISH CHARM";
- color:#ff557e;
- font-size:7px;
- text-align:center;
-}
-.caution {
- background:repeating-linear-gradient(135deg,#f8d500 0 10px,#171717 10px 20px);
- border:3px solid #111;
-}
-.caution:before {
- content:"CAUTION!";
- color:#111;
- background:#f8d500;
- font-size:8px;
- text-align:center;
-}
-.halloween {
- background:#160e20;
- border:3px solid #f47721;
-}
-.halloween:before {
- content:"HALLOWEEN";
- color:#ff8b2b;
- font-size:9px;
- text-align:center;
-}
-.original {
- background:#fff;
- border:1px solid #222;
-}
-.original:before {
- content:"PHOTOBOOTH";
- font-size:7px;
- color:#222;
- text-align:center;
-}
-.kawaii {
- background:#ffd9e7;
- border:3px dotted #e875a0;
-}
-.kawaii:before {
- content:"♡ SWEET DAYS ♡";
- font-size:8px;
- color:#c74d7d;
- text-align:center;
-}
-.retro {
- background:#bd9064;
- border:5px solid #f0d6ac;
-}
-.retro:before {
- content:"MEMORY FILM";
- color:#fff2d7;
- font-size:8px;
- text-align:center;
-}
-.f1 {
- background:#c90020;
- border:4px solid white;
- outline:2px solid #111;
-}
-.f1:before {
- content:"RACING CLUB";
- background:#111;
- color:white;
- text-align:center;
- font-size:8px;
-}
-.newspaper {
- background:#eee9dd;
- border:2px solid #111;
-}
-.newspaper:before {
- content:"THE DAILY";
- color:#111;
- font-family:Georgia;
- text-align:center;
- font-weight:bold;
-}
-.neon {
- background:#17122d;
- border:3px solid #fa50df;
- box-shadow:0 0 8px #fa50df;
-}
-.neon:before {
- content:"NEON PARTY";
- color:#ff75ec;
- text-align:center;
- font-size:8px;
-}
-.flower {
- background:#f7d9e8;
- border:3px double #bd7398;
-}
-.flower:before {
- content:"FLOWER CLUB";
- color:#a34f78;
- text-align:center;
- font-size:8px;
-}
-.tag {
- position:absolute;
- top:0;right:0;
- background:#f47a32;
- color:white;
- font-size:9px;
- padding:4px 7px;
- border-radius:5px;
- transform:rotate(4deg);
- z-index:2;
-}
-@media(max-width:700px){
- .template-gallery{grid-template-columns:repeat(2,1fr)}
-}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+*{box-sizing:border-box}
+body{margin:0;background:#fff5f7;font-family:Poppins,sans-serif;color:#29232a}
+header{text-align:center;padding:25px}
+header h1{color:#ec668d;margin:0;font-size:30px}
+header p{color:#987d89;font-size:12px}
+main{max-width:1250px;margin:auto;padding:15px}
+.categories{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:15px 0 55px}
+.categories button{border:1px solid #f45c87;background:white;color:#f45c87;padding:10px 20px;border-radius:30px;cursor:pointer;font-size:11px}
+.categories button.active{background:#f45c87;color:white}
+.catalog{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:25px}
+.item{position:relative;text-align:center;padding:12px 5px;cursor:pointer;border-radius:12px;transition:.2s}
+.item:hover{transform:translateY(-5px);background:#fff}
+.item.selected{background:#ffe3ed;outline:2px solid #f45c87}
+.item h4{font-size:11px;margin:15px 0 5px}
+.item small{font-size:10px;color:#888}
+.tag{position:absolute;top:0;right:0;background:#ed7b32;color:white;font-size:9px;padding:4px 8px;border-radius:5px;transform:rotate(4deg)}
+.tag.pink{background:#f00078}
+.tag.yellow{background:#f9df55;color:#7e4a42}
+.mini{width:72px;height:170px;margin:auto;padding:6px;display:flex;flex-direction:column;gap:5px;position:relative;overflow:hidden}
+.mini .photo{flex:1;background:linear-gradient(160deg,#b6d7df 0 45%,#a5be75 46% 75%,#f5d6bb 76%);border:1px solid #ffffffaa;position:relative}
+.mini .photo:nth-child(even){background:linear-gradient(150deg,#e7c9d7 0 45%,#b9c9b1 46% 75%,#d9c3ad 76%)}
+.mini:before{font-size:8px;text-align:center;font-weight:800}
+.mini.devil{background:repeating-linear-gradient(45deg,#171017 0 8px,#3b1228 8px 16px);border:3px solid #ed376d}
+.devil:before{content:"DEVILISH CHARM";color:#ff7c9f}
+.mini.caution{background:repeating-linear-gradient(135deg,#f8d500 0 9px,#171717 9px 18px);border:3px solid black}
+.caution:before{content:"CAUTION!";color:#171717;background:#f8d500}
+.mini.halloween{background:#17101f;border:3px solid #f47721}
+.halloween:before{content:"HALLOWEEN 🎃";color:#ff9b35}
+.mini.original{background:white;border:1px solid black}
+.original:before{content:"PHOTOBOOTH";color:#222}
+.mini.hello{background:#ffc4d9;border:3px dotted #ed79a2}
+.hello:before{content:"HELLO KITTY ♡";color:#a9436b}
+.mini.retro{background:#a77b50;border:4px solid #f3dfbd}
+.retro:before{content:"VINTAGE FILM";color:white}
+.mini.f1{background:#d00020;border:4px solid white;outline:2px solid #111}
+.f1:before{content:"FORMULA 1";background:#111;color:white}
+.mini.y2k{background:linear-gradient(140deg,#d88cda,#6f4cbb);border:3px solid white}
+.y2k:before{content:"Y2K FLASH";color:white}
+.mini.kuromi{background:#382345;border:3px solid #c9a3e9}
+.kuromi:before{content:"KUROMI";color:#e4c4ff}
+.mini.korean{background:#f5dce8;border:2px solid white}
+.korean:before{content:"SEOUL DIARY";color:#a76b89}
+.mini.cinema{background:#181818;border:3px solid #bca56a}
+.cinema:before{content:"CINEMA";color:#f6d889}
+.mini.flower{background:#f3c7db;border:3px double #a35b7e}
+.flower:before{content:"FLOWER CLUB";color:#995576}
+.mini.newspaper{background:#eee9dd;border:2px solid #222}
+.newspaper:before{content:"THE DAILY";color:#222}
+.mini.neon{background:#17152c;border:3px solid #fa50df;box-shadow:0 0 8px #fa50df}
+.neon:before{content:"NEON PARTY";color:#ff75ec}
+.mini.summer{background:#aee6f4;border:3px solid white}
+.summer:before{content:"SUMMER";color:#347d9a}
+.mini.love{background:#f5a4b7;border:3px solid white}
+.love:before{content:"LOVE STORY";color:#9e344f}
+.mini.grid{width:120px;height:150px;display:grid;grid-template-columns:1fr 1fr}
+.mini.grid:before{display:none}
+.mini.grid .photo{min-height:0}
+.section{background:white;border-radius:20px;padding:22px;margin:30px 0;box-shadow:0 5px 25px #dba6ba20}
+.hidden{display:none}
+.camera-layout{display:grid;grid-template-columns:1fr 1fr;gap:25px}
+video{width:100%;background:#222;border-radius:15px;transform:scaleX(-1)}
+button.action{border:0;background:#eb79a0;color:white;padding:12px 18px;border-radius:10px;margin:5px;cursor:pointer;font-weight:bold}
+button:disabled{opacity:.4}
+input{padding:12px;width:100%;border:1px solid #f0c7d8;border-radius:10px;margin:10px 0}
+canvas{display:block;width:100%;max-width:330px;margin:15px auto}
+#status{text-align:center;color:#e65e8b;font-size:13px;margin:12px}
+.gallery{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.gallery img{width:100%;border-radius:10px}
+@media(max-width:800px){.catalog{grid-template-columns:repeat(3,1fr)}.camera-layout{grid-template-columns:1fr}}
+@media(max-width:500px){.catalog{grid-template-columns:repeat(2,1fr)}.gallery{grid-template-columns:repeat(3,1fr)}}
 </style>
+</head>
+<body>
 
-<div class="template-gallery" id="catalog">
+<header>
+<h1>♡ MY PHOTOBOOTH ♡</h1>
+<p>Choose your layout. Capture your memories.</p>
+</header>
 
-<div class="template-card selected" data-theme="devil">
-<span class="tag">NEW</span>
-<div class="frame devil">
-<div class="slot"></div><div class="slot"></div>
-<div class="slot"></div><div class="slot"></div>
-</div>
-<h4>Devilish Charm - 4 Photos</h4>
-<small>6 × 2 in strip</small>
-</div>
-
-<div class="template-card" data-theme="caution">
-<span class="tag">HOT</span>
-<div class="frame caution">
-<div class="slot"></div><div class="slot"></div>
-<div class="slot"></div><div class="slot"></div>
-</div>
-<h4>Caution! Too Hot</h4>
-<small>6 × 2 in strip</small>
+<main>
+<div class="categories" id="categories">
+<button class="active" data-cat="all">All</button>
+<button data-cat="classic">Classic Strips</button>
+<button data-cat="studio">Studio</button>
+<button data-cat="filter">Filter Booths</button>
+<button data-cat="special">Special Formats</button>
+<button data-cat="events">Events</button>
 </div>
 
-<div class="template-card" data-theme="halloween">
-<span class="tag">HALLOWEEN</span>
-<div class="frame halloween">
-<div class="slot"></div><div class="slot"></div>
-<div class="slot"></div><div class="slot"></div>
-</div>
-<h4>Halloween - 4 Photos</h4>
-<small>6 × 2 in strip</small>
-</div>
+<div class="catalog" id="catalog"></div>
 
-<div class="template-card" data-theme="original">
-<span class="tag">CLASSIC</span>
-<div class="frame original">
-<div class="slot"></div><div class="slot"></div>
-<div class="slot"></div><div class="slot"></div>
+<section class="section hidden" id="booth">
+<h2>♡ Your Photo Session</h2>
+<p id="selectedName"></p>
+<div class="camera-layout">
+<div>
+<video id="video" autoplay playsinline muted></video>
+<button class="action" id="start">ON CAMERA</button>
+<button class="action" id="capture" disabled>TAKE PHOTOS</button>
+<div id="status">Nyalakan kamera terlebih dahulu.</div>
 </div>
-<h4>Original Strip</h4>
-<small>6 × 2 in strip</small>
+<div>
+<h3>Preview Result</h3>
+<input id="caption" maxlength="30" placeholder="Tulis nama atau pesan...">
+<canvas id="result" width="600" height="1800"></canvas>
+<button class="action" id="download" disabled>DOWNLOAD PNG</button>
+<button class="action" id="save" disabled>SAVE PHOTO</button>
+<button class="action" id="back">BACK TO LAYOUTS</button>
 </div>
+</div>
+</section>
 
-<div class="template-card" data-theme="kawaii">
-<div class="frame kawaii">
-<div class="slot"></div><div class="slot"></div>
-<div class="slot"></div><div class="slot"></div>
-</div>
-<h4>Sweet Kawaii</h4>
-<small>6 × 2 in strip</small>
-</div>
+<section class="section">
+<h2>♡ My Gallery</h2>
+<div class="gallery" id="gallery"></div>
+</section>
+</main>
 
-<div class="template-card" data-theme="retro">
-<div class="frame retro">
-<div class="slot"></div><div class="slot"></div>
-<div class="slot"></div><div class="slot"></div>
-</div>
-<h4>Retro Memories</h4>
-<small>6 × 2 in strip</small>
-</div>
+<script>
+const templates=[
+{id:'devil',name:'Devilish Charm - 4 Photos',cat:'classic',count:4,layout:'strip',tag:'NEW'},
+{id:'caution',name:'Caution! Too Hot - 4 Photos',cat:'classic',count:4,layout:'strip',tag:'HOT'},
+{id:'halloween',name:'Halloween - 4 Photos',cat:'events',count:4,layout:'strip',tag:'HALLOWEEN'},
+{id:'original',name:'Original Strip - 3 Photos',cat:'studio',count:3,layout:'strip'},
+{id:'hello',name:'Hello Kitty - 4 Photos',cat:'events',count:4,layout:'strip'},
+{id:'retro',name:'Vintage Film - 4 Photos',cat:'studio',count:4,layout:'strip'},
+{id:'f1',name:'Formula Racing - 4 Photos',cat:'events',count:4,layout:'strip'},
+{id:'y2k',name:'Y2K Flash - 4 Photos',cat:'filter',count:4,layout:'strip'},
+{id:'kuromi',name:'Kuromi - 4 Photos',cat:'events',count:4,layout:'strip'},
+{id:'korean',name:'Korean Aesthetic - 4 Photos',cat:'classic',count:4,layout:'strip'},
+{id:'cinema',name:'Cinema Film - 4 Photos',cat:'studio',count:4,layout:'strip'},
+{id:'flower',name:'Flower Garden - 4 Photos',cat:'filter',count:4,layout:'strip'},
+{id:'newspaper',name:'Newspaper - 4 Photos',cat:'special',count:4,layout:'grid'},
+{id:'neon',name:'Neon Party - 4 Photos',cat:'filter',count:4,layout:'strip'},
+{id:'summer',name:'Summer Holiday - 4 Photos',cat:'events',count:4,layout:'strip'},
+{id:'love',name:'Love Story - 4 Photos',cat:'classic',count:4,layout:'strip'},
+{id:'duo',name:'Duo Layout - 2 Photos',cat:'special',count:2,layout:'grid'},
+{id:'six',name:'Six Frames - 6 Photos',cat:'special',count:6,layout:'strip'}
+];
 
-<div class="template-card" data-theme="f1">
-<div class="frame f1">
-<div class="slot"></div><div class="slot"></div>
-<div class="slot"></div><div class="slot"></div>
-</div>
-<h4>F1 Racing</h4>
-<small>6 × 2 in strip</small>
-</div>
+const designs={
+devil:{bg:'#24101e',frame:'#ed376d',ink:'#ffb1c6',title:'DEVILISH CHARM',deco:'♠ ✦ ♠'},
+caution:{bg:'#f4d500',frame:'#171717',ink:'#171717',title:'CAUTION! TOO HOT',deco:'⚠ ⚡ ⚠'},
+halloween:{bg:'#21152a',frame:'#f47721',ink:'#ffad5a',title:'HALLOWEEN',deco:'🎃 ✦ 🦇'},
+original:{bg:'#fff',frame:'#222',ink:'#222',title:'PHOTOBOOTH',deco:'♡ • ♡'},
+hello:{bg:'#ffc4d9',frame:'#fff',ink:'#a9436b',title:'HELLO KITTY',deco:'🎀 ♡ 🎀'},
+retro:{bg:'#a77b50',frame:'#f3dfbd',ink:'#fff5df',title:'VINTAGE FILM',deco:'✦ 1970 ✦'},
+f1:{bg:'#d00020',frame:'#fff',ink:'#fff',title:'FORMULA RACING',deco:'🏎 🏁 🏎'},
+y2k:{bg:'#a65db7',frame:'#fff',ink:'#fff',title:'Y2K FLASH',deco:'✦ 💿 ✦'},
+kuromi:{bg:'#382345',frame:'#c9a3e9',ink:'#fff',title:'KUROMI CLUB',deco:'☠ ♡ ☠'},
+korean:{bg:'#f5dce8',frame:'#fff',ink:'#a76b89',title:'SEOUL DIARY',deco:'♡ ✿ ♡'},
+cinema:{bg:'#181818',frame:'#bca56a',ink:'#f6d889',title:'CINEMA FILM',deco:'★ 🎬 ★'},
+flower:{bg:'#f3c7db',frame:'#a35b7e',ink:'#995576',title:'FLOWER CLUB',deco:'🌸 ✿ 🌸'},
+newspaper:{bg:'#eee9dd',frame:'#222',ink:'#222',title:'THE DAILY NEWS',deco:'★ EXTRA ★'},
+neon:{bg:'#17152c',frame:'#fa50df',ink:'#ff75ec',title:'NEON PARTY',deco:'⚡ ✦ ⚡'},
+summer:{bg:'#aee6f4',frame:'#fff',ink:'#347d9a',title:'SUMMER DAYS',deco:'☀ 🌊 ☀'},
+love:{bg:'#f5a4b7',frame:'#fff',ink:'#9e344f',title:'LOVE STORY',deco:'♥ ♡ ♥'},
+duo:{bg:'#e9d9ed',frame:'#fff',ink:'#76517e',title:'DUO MOMENTS',deco:'♡ ♡'},
+six:{bg:'#dcebf4',frame:'#fff',ink:'#43647a',title:'SIX MOMENTS',deco:'✦ ✦ ✦'}
+};
 
-<div class="template-card" data-theme="newspaper">
-<div class="frame newspaper">
-<div class="slot"></div><div class="slot"></div>
-<div class="slot"></div><div class="slot"></div>
-</div>
-<h4>Newspaper</h4>
-<small>6 × 2 in strip</small>
-</div>
+let selected=templates[0],photos=[],stream=null;
+const video=document.getElementById('video');
+const canvas=document.getElementById('result');
+const ctx=canvas.getContext('2d');
 
-<div class="template-card" data-theme="neon">
-<div class="frame neon">
-<div class="slot"></div><div class="slot"></div>
-<div class="slot"></div><div class="slot"></div>
-</div>
-<h4>Neon Party</h4>
-<small>6 × 2 in strip</small>
-</div>
+function renderCatalog(category='all'){
+const catalog=document.getElementById('catalog');
+catalog.innerHTML='';
+templates.filter(t=>category==='all'||t.cat===category).forEach(t=>{
+const card=document.createElement('div');
+card.className='item'+(selected.id===t.id?' selected':'');
+const tag=t.tag?`<span class="tag">${t.tag}</span>`:'';
+const preview=t.layout==='grid'?'mini grid':'mini';
+const slots=Array.from({length:t.count},()=>'<div class="photo"></div>').join('');
+card.innerHTML=`${tag}<div class="${preview} ${t.id}">${slots}</div><h4>${t.name}</h4><small>${t.layout==='grid'?'6 × 4 in format':'6 × 2 in strip'}</small>`;
+card.onclick=()=>chooseTemplate(t);
+catalog.appendChild(card);
+});
+}
 
-<div class="template-card" data-theme="flower">
-<div class="frame flower">
-<div class="slot"></div><div class="slot"></div>
-<div class="slot"></div><div class="slot"></div>
-</div>
-<h4>Flower Garden</h4>
-<small>6 × 2 in strip</small>
-</div>
+function chooseTemplate(t){
+selected=t;
+photos=[];
+renderCatalog(document.querySelector('.categories button.active').dataset.cat);
+document.getElementById('selectedName').textContent='Selected: '+t.name;
+document.getElementById('booth').classList.remove('hidden');
+document.getElementById('booth').scrollIntoView({behavior:'smooth'});
+document.getElementById('download').disabled=true;
+document.getElementById('save').disabled=true;
+}
 
-</div>
+document.querySelectorAll('.categories button').forEach(btn=>{
+btn.onclick=()=>{
+document.querySelectorAll('.categories button').forEach(b=>b.classList.remove('active'));
+btn.classList.add('active');
+renderCatalog(btn.dataset.cat);
+};
+});
+
+document.getElementById('start').onclick=async()=>{
+try{
+if(!navigator.mediaDevices?.getUserMedia)throw new Error('Gunakan HTTPS atau localhost.');
+if(stream)stream.getTracks().forEach(t=>t.stop());
+stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false});
+video.srcObject=stream;
+document.getElementById('capture').disabled=false;
+document.getElementById('status').textContent='Kamera siap! ♡';
+}catch(e){alert('Kamera tidak bisa dibuka: '+e.message);}
+};
+
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+
+document.getElementById('capture').onclick=async()=>{
+if(!stream)return;
+const btn=document.getElementById('capture');
+btn.disabled=true;photos=[];
+try{
+for(let i=0;i<selected.count;i++){
+for(let n=3;n>0;n--){
+document.getElementById('status').textContent=`Foto ${i+1}/${selected.count} — ${n}`;
+await wait(1000);
+}
+const c=document.createElement('canvas');
+c.width=video.videoWidth;c.height=video.videoHeight;
+const x=c.getContext('2d');
+x.translate(c.width,0);x.scale(-1,1);x.drawImage(video,0,0);
+photos.push(c);
+}
+drawResult();
+document.getElementById('download').disabled=false;
+document.getElementById('save').disabled=false;
+document.getElementById('status').textContent='Foto selesai! ♡';
+}catch(e){alert(e.message);}
+btn.disabled=false;
+};
+
+function drawResult(){
+const t=designs[selected.id];
+const isGrid=selected.layout==='grid';
+const W=600;
+const H=isGrid?900:Math.max(900,selected.count*405+260);
+canvas.width=W;canvas.height=H;
+ctx.fillStyle=t.bg;ctx.fillRect(0,0,W,H);
+
+// Frame decorations
+ctx.strokeStyle=t.frame;ctx.lineWidth=12;
+ctx.strokeRect(10,10,W-20,H-20);
+
+if(selected.id==='caution'||selected.id==='f1'){
+for(let i=0;i<W;i+=40){
+ctx.fillStyle=selected.id==='f1'?'#111':t.frame;
+ctx.fillRect(i,0,20,18);
+ctx.fillRect(i,H-18,20,18);
+}
+}
+if(selected.id==='devil'||selected.id==='halloween'){
+ctx.font='30px Arial';ctx.fillStyle=t.ink;
+ctx.fillText('✦',35,160);ctx.fillText('✦',565,160);
+ctx.fillText('✦',35,H-120);ctx.fillText('✦',565,H-120);
+}
+
+ctx.textAlign='center';
+ctx.fillStyle=t.ink;
+ctx.font='bold 34px Arial';
+ctx.fillText(t.title,W/2,65);
+ctx.font='26px Arial';
+ctx.fillText(t.deco,W/2,110);
+
+const cols=isGrid?2:1;
+const rows=Math.ceil(photos.length/cols);
+const margin=45,gap=15;
+const slotW=(W-margin*2-(cols-1)*gap)/cols;
+const slotH=isGrid?300:Math.min(340,(H-200-(rows-1)*gap)/rows);
+
+photos.forEach((photo,i)=>{
+const col=i%cols,row=Math.floor(i/cols);
+const x=margin+col*(slotW+gap);
+const y=145+row*(slotH+gap);
+
+ctx.fillStyle=t.frame;
+ctx.fillRect(x-7,y-7,slotW+14,slotH+14);
+
+const ratio=Math.max(slotW/photo.width,slotH/photo.height);
+const sw=slotW/ratio,sh=slotH/ratio;
+ctx.save();ctx.beginPath();ctx.rect(x,y,slotW,slotH);ctx.clip();
+ctx.drawImage(photo,(photo.width-sw)/2,(photo.height-sh)/2,sw,sh,x,y,slotW,slotH);
+ctx.restore();
+
+if(selected.id==='newspaper'){
+ctx.strokeStyle='#222';ctx.lineWidth=2;ctx.strokeRect(x,y,slotW,slotH);
+}
+});
+
+ctx.fillStyle=t.ink;
+ctx.font='bold 25px Arial';
+ctx.fillText(document.getElementById('caption').value||'BEST MOMENTS ♡',W/2,H-65);
+ctx.font='14px Arial';
+ctx.fillText('MY PHOTOBOOTH',W/2,H-30);
+}
+
+document.getElementById('caption').oninput=()=>{
+if(photos.length)drawResult();
+};
+
+document.getElementById('download').onclick=()=>{
+const a=document.createElement('a');
+a.href=canvas.toDataURL('image/png');
+a.download=selected.id+'-photobooth.png';a.click();
+};
+
+function showGallery(){
+const list=JSON.parse(localStorage.getItem('myBoothGallery')||'[]');
+const area=document.getElementById('gallery');area.innerHTML='';
+list.forEach((src,i)=>{
+const img=document.createElement('img');img.src=src;
+img.onclick=()=>{
+const a=document.createElement('a');a.href=src;a.download='photo-'+i+'.png';a.click();
+};
+area.appendChild(img);
+});
+}
+
+document.getElementById('save').onclick=()=>{
+try{
+const list=JSON.parse(localStorage.getItem('myBoothGallery')||'[]');
+list.unshift(canvas.toDataURL('image/png'));
+localStorage.setItem('myBoothGallery',JSON.stringify(list.slice(0,20)));
+showGallery();alert('Foto berhasil disimpan!');
+}catch(e){alert('Penyimpanan penuh. Download foto saja.');}
+};
+
+document.getElementById('back').onclick=()=>{
+document.getElementById('booth').classList.add('hidden');
+document.getElementById('catalog').scrollIntoView({behavior:'smooth'});
+};
+
+renderCatalog();
+showGallery();
+
+window.addEventListener('beforeunload',()=>{
+if(stream)stream.getTracks().forEach(t=>t.stop());
+});
+</script>
+</body>
+</html>
