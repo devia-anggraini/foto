@@ -4,148 +4,151 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dreamy PhotoBooth</title>
+<title>Pinkie PhotoBooth</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
 
 *{box-sizing:border-box;margin:0;padding:0}
 
 body{
- font-family:'Poppins',sans-serif;
- background:#fff1f5;
- color:#493642;
- padding:20px;
+ font-family:Poppins,sans-serif;
+ background:linear-gradient(135deg,#fff1f5,#f9dce6);
+ color:#333;
+ min-height:100vh;
 }
 
-header{text-align:center;padding:30px 10px}
-header h1{font-size:38px;color:#df78a0}
-header p{margin-top:8px;color:#957482}
+header{text-align:center;padding:28px 15px}
+header h1{color:#f05c88;font-size:32px}
+header p{color:#977b88;font-size:13px;margin-top:6px}
 
-.container{
- max-width:1100px;
- margin:auto;
+.page{max-width:1150px;margin:auto;padding:15px}
+
+.category-menu{
+ display:flex;justify-content:center;
+ flex-wrap:wrap;gap:12px;margin:15px 0 55px;
+}
+
+.category{
+ background:white;color:#fa5682;
+ border:1px solid #fa5682;border-radius:30px;
+ padding:9px 22px;font-size:11px;
+ cursor:pointer;
+}
+
+.category.active{background:#f45d88;color:white}
+
+.template-gallery{
  display:grid;
- grid-template-columns:1fr 1fr;
- gap:20px;
+ grid-template-columns:repeat(5,minmax(0,1fr));
+ gap:24px;
 }
 
-.card{
+.template-card{
+ position:relative;text-align:center;
+ padding:12px 8px;border-radius:13px;
+ cursor:pointer;transition:.2s;
+}
+
+.template-card:hover{background:#ffffffa0;transform:translateY(-5px)}
+.template-card.selected{background:#ffe2ec;outline:2px solid #f45d88}
+
+.tag{
+ position:absolute;top:0;right:0;
+ padding:4px 9px;border-radius:5px;
+ font-size:9px;font-weight:800;color:white;
+ transform:rotate(4deg);z-index:2;
+}
+.orange{background:#ef812e}
+.pink{background:#f00078}
+.yellow{background:#ffe86c;color:#9b5262}
+
+.strip{
+ width:62px;height:165px;
+ padding:5px;margin:auto;
+ border:1px solid #222;
+ display:flex;flex-direction:column;gap:4px;
  background:white;
- padding:22px;
- border-radius:22px;
- box-shadow:0 5px 25px #d99bb522;
 }
 
-h2{color:#d66f98;margin-bottom:15px}
+.strip div{
+ flex:1;display:grid;place-items:center;
+ font-size:17px;border:1px solid #ddd;
+}
 
-.camera{
- background:#171717;
- border-radius:16px;
- overflow:hidden;
+.f1 div{background:#252525;color:white}
+.kitty div{background:#fff0f5}
+.kuromi div{background:#ead6ff}
+.vintage div{background:#f5e2c3}
+.y2k div{background:#f5c7f4}
+.korean div{background:#fff7fa}
+.cinema div{background:#333;color:white}
+.love div{background:#ffe1e9}
+.flower div{background:#fff0f5}
+.summer div{background:#d7f3ff}
+.neon div{background:#262044;color:#ff75e8}
+.newspaper div{background:#eee;color:#222}
+
+.grid-preview{
+ width:125px;height:150px;margin:auto;
+ display:grid;grid-template-columns:1fr 1fr;
+ gap:4px;padding:6px;background:white;
+ border:1px solid black;
+}
+.grid-preview div{display:grid;place-items:center;background:#f7dce8}
+
+.template-card h4{font-size:11px;margin-top:17px}
+.template-card small{font-size:10px;color:#888;display:block;margin-top:8px}
+
+.section{
+ background:white;border-radius:20px;
+ padding:22px;margin:25px auto;
+ box-shadow:0 5px 20px #dba6ba30;
+}
+
+.hidden{display:none!important}
+
+.camera-layout{
+ display:grid;grid-template-columns:1fr 1fr;gap:25px;
 }
 
 video{
- width:100%;
- display:block;
+ width:100%;background:#222;
+ border-radius:15px;display:block;
  transform:scaleX(-1);
 }
 
-button{
- border:none;
- padding:12px 17px;
- margin:5px;
- border-radius:12px;
- background:#e987ab;
- color:white;
- font-weight:700;
- cursor:pointer;
+button.action{
+ background:#ed78a0;color:white;border:0;
+ padding:12px 20px;border-radius:12px;
+ margin:5px;cursor:pointer;font-weight:700;
 }
-
-button:hover{opacity:.8}
-button:disabled{opacity:.4;cursor:not-allowed}
-
-.templates{
- display:grid;
- grid-template-columns:repeat(3,1fr);
- gap:10px;
- max-height:410px;
- overflow-y:auto;
-}
-
-.template{
- min-height:85px;
- border:2px solid #f2d2df;
- border-radius:13px;
- display:flex;
- flex-direction:column;
- align-items:center;
- justify-content:center;
- cursor:pointer;
- font-size:13px;
- font-weight:700;
- text-align:center;
- padding:8px;
- transition:.2s;
-}
-
-.template:hover{transform:translateY(-3px)}
-
-.template.active{
- border:3px solid #df78a0;
- background:#ffe5ef;
-}
-
-.template span{font-size:24px}
-
-input{
- width:100%;
- padding:12px;
- border:1px solid #efc8d9;
- border-radius:10px;
- margin:12px 0;
- font-family:inherit;
-}
+button.action:disabled{opacity:.4;cursor:not-allowed}
 
 canvas{
- width:100%;
- max-width:350px;
- display:block;
- margin:20px auto;
- border-radius:10px;
+ width:100%;max-width:330px;
+ display:block;margin:15px auto;
+ border-radius:8px;
 }
 
-#status{
- text-align:center;
- margin:12px;
- color:#d66f98;
- font-weight:700;
- min-height:25px;
+input{
+ width:100%;padding:12px;
+ border:1px solid #f0c7d8;border-radius:10px;
+ margin:10px 0;
 }
+
+#status{text-align:center;color:#e65e8b;margin:12px;font-weight:600}
 
 .gallery{
- display:grid;
- grid-template-columns:repeat(4,1fr);
- gap:10px;
+ display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
 }
-
-.gallery img{
- width:100%;
- border-radius:10px;
- cursor:pointer;
-}
-
-.gallery button{
- width:100%;
- margin:4px 0;
- font-size:11px;
- padding:7px;
-}
+.gallery img{width:100%;border-radius:10px}
 
 @media(max-width:750px){
- .container{grid-template-columns:1fr}
- header h1{font-size:29px}
- .templates{grid-template-columns:repeat(3,1fr)}
+ .template-gallery{grid-template-columns:repeat(2,1fr)}
+ .camera-layout{grid-template-columns:1fr}
+ .category-menu{margin-bottom:25px}
+ .gallery{grid-template-columns:repeat(2,1fr)}
 }
 </style>
 </head>
@@ -153,269 +156,245 @@ canvas{
 <body>
 
 <header>
-<h1>♡ Dreamy PhotoBooth ♡</h1>
-<p>Capture your favorite memories!</p>
+<h1>♡ Pinkie PhotoBooth ♡</h1>
+<p>Choose your favorite template and capture your memories!</p>
 </header>
 
-<div class="container">
+<div class="page">
 
-<!-- CAMERA -->
-<section class="card">
-<h2>📸 Camera Booth</h2>
+<!-- KATEGORI -->
+<div class="category-menu">
+<button class="category active" data-cat="all">All</button>
+<button class="category" data-cat="classic">Classic Strips</button>
+<button class="category" data-cat="studio">Studio</button>
+<button class="category" data-cat="filter">Filter Booths</button>
+<button class="category" data-cat="special">Special Formats</button>
+<button class="category" data-cat="events">Events</button>
+</div>
 
-<div class="camera">
+<!-- KATALOG TEMPLATE -->
+<div class="template-gallery" id="catalog">
+
+<div class="template-card selected" data-cat="classic" data-theme="f1" data-count="4" data-layout="strip">
+<span class="tag orange">RACING</span>
+<div class="strip f1"><div>🏎️</div><div>🏁</div><div>🏎️</div><div>🏁</div></div>
+<h4>Formula Racing - 4 Photos</h4>
+<small>6 × 2 in strip</small>
+</div>
+
+<div class="template-card" data-cat="events" data-theme="kitty" data-count="4" data-layout="strip">
+<span class="tag pink">POPULAR</span>
+<div class="strip kitty"><div>🎀</div><div>♡</div><div>🎀</div><div>♡</div></div>
+<h4>Hello Kitty - 4 Photos</h4>
+<small>6 × 2 in strip</small>
+</div>
+
+<div class="template-card" data-cat="events" data-theme="kuromi" data-count="4" data-layout="strip">
+<span class="tag orange">SPECIAL</span>
+<div class="strip kuromi"><div>💜</div><div>☠️</div><div>💜</div><div>☠️</div></div>
+<h4>Kuromi - 4 Photos</h4>
+<small>6 × 2 in strip</small>
+</div>
+
+<div class="template-card" data-cat="special" data-theme="polaroid" data-count="4" data-layout="grid">
+<span class="tag pink">NEW LAYOUT</span>
+<div class="grid-preview"><div>📷</div><div>📷</div><div>📷</div><div>📷</div></div>
+<h4>Photobooth Layout - 4 Photos</h4>
+<small>6 × 4 in format</small>
+</div>
+
+<div class="template-card" data-cat="studio" data-theme="vintage" data-count="4" data-layout="strip">
+<span class="tag yellow">TEMPLATE LAYOUT</span>
+<div class="strip vintage"><div>📸</div><div>🤎</div><div>📸</div><div>🤎</div></div>
+<h4>Vintage Original - 4 Photos</h4>
+<small>6 × 2 in strip</small>
+</div>
+
+<div class="template-card" data-cat="filter" data-theme="y2k" data-count="4" data-layout="strip">
+<span class="tag pink">TRENDING</span>
+<div class="strip y2k"><div>💿</div><div>✨</div><div>💿</div><div>✨</div></div>
+<h4>Y2K Flash - 4 Photos</h4>
+<small>6 × 2 in strip</small>
+</div>
+
+<div class="template-card" data-cat="classic" data-theme="korean" data-count="4" data-layout="strip">
+<div class="strip korean"><div>♡</div><div>✿</div><div>♡</div><div>✿</div></div>
+<h4>Korean Aesthetic - 4 Photos</h4>
+<small>6 × 2 in strip</small>
+</div>
+
+<div class="template-card" data-cat="studio" data-theme="cinema" data-count="4" data-layout="strip">
+<span class="tag orange">POPULAR</span>
+<div class="strip cinema"><div>🎬</div><div>★</div><div>🎬</div><div>★</div></div>
+<h4>Cinema Film - 4 Photos</h4>
+<small>6 × 2 in strip</small>
+</div>
+
+<div class="template-card" data-cat="events" data-theme="love" data-count="4" data-layout="strip">
+<div class="strip love"><div>❤️</div><div>♡</div><div>❤️</div><div>♡</div></div>
+<h4>Love Story - 4 Photos</h4>
+<small>6 × 2 in strip</small>
+</div>
+
+<div class="template-card" data-cat="filter" data-theme="neon" data-count="4" data-layout="strip">
+<div class="strip neon"><div>⚡</div><div>✦</div><div>⚡</div><div>✦</div></div>
+<h4>Neon Party - 4 Photos</h4>
+<small>6 × 2 in strip</small>
+</div>
+
+<div class="template-card" data-cat="events" data-theme="flower" data-count="4" data-layout="strip">
+<div class="strip flower"><div>🌸</div><div>🌷</div><div>🌸</div><div>🌷</div></div>
+<h4>Flower Garden - 4 Photos</h4>
+<small>6 × 2 in strip</small>
+</div>
+
+<div class="template-card" data-cat="special" data-theme="newspaper" data-count="4" data-layout="grid">
+<div class="grid-preview"><div>📰</div><div>★</div><div>📷</div><div>★</div></div>
+<h4>Newspaper Layout - 4 Photos</h4>
+<small>6 × 4 in format</small>
+</div>
+
+<div class="template-card" data-cat="events" data-theme="summer" data-count="4" data-layout="strip">
+<div class="strip summer"><div>☀️</div><div>🌊</div><div>☀️</div><div>🌊</div></div>
+<h4>Summer Holiday - 4 Photos</h4>
+<small>6 × 2 in strip</small>
+</div>
+
+</div>
+
+<!-- AREA FOTO -->
+<div class="section hidden" id="booth">
+
+<h2>📸 Your Photo Session</h2>
+<p id="chosenName" style="color:#e65e8b"></p>
+
+<div class="camera-layout">
+
+<div>
 <video id="video" autoplay playsinline muted></video>
-</div>
-
-<div style="text-align:center;margin-top:15px">
-<button onclick="startCamera()">ON CAMERA</button>
-<button id="capture" onclick="takePhotos()" disabled>
-TAKE PHOTO
-</button>
-</div>
-
-<div id="status">Nyalakan kamera terlebih dahulu ♡</div>
-</section>
-
-<!-- TEMPLATE -->
-<section class="card">
-
-<h2>♡ Choose Your Template</h2>
-
-<div class="templates" id="templates">
-
-<div class="template active" data-theme="f1"><span>🏎️</span>F1 Racing</div>
-<div class="template" data-theme="kitty"><span>🎀</span>Hello Kitty</div>
-<div class="template" data-theme="kuromi"><span>💜</span>Kuromi</div>
-<div class="template" data-theme="cinema"><span>🎬</span>Cinema</div>
-<div class="template" data-theme="y2k"><span>💿</span>Y2K</div>
-<div class="template" data-theme="korean"><span>🇰🇷</span>Korean</div>
-<div class="template" data-theme="vintage"><span>📷</span>Vintage</div>
-<div class="template" data-theme="newspaper"><span>📰</span>Newspaper</div>
-<div class="template" data-theme="love"><span>❤️</span>Love</div>
-<div class="template" data-theme="coquette"><span>🎀</span>Coquette</div>
-<div class="template" data-theme="racingblue"><span>🏁</span>Blue Racing</div>
-<div class="template" data-theme="strawberry"><span>🍓</span>Strawberry</div>
-<div class="template" data-theme="space"><span>🚀</span>Space</div>
-<div class="template" data-theme="flower"><span>🌸</span>Flower</div>
-<div class="template" data-theme="blackpink"><span>🖤</span>Black Pink</div>
-<div class="template" data-theme="polaroid"><span>📸</span>Polaroid</div>
-<div class="template" data-theme="summer"><span>☀️</span>Summer</div>
-<div class="template" data-theme="christmas"><span>🎄</span>Christmas</div>
-
-</div>
-
-<input id="caption" maxlength="30"
-placeholder="Tulis nama atau pesan..."
-oninput="drawResult()">
-
-<h2>Preview Photo</h2>
-
-<canvas id="result" width="700" height="1500"></canvas>
-
 <div style="text-align:center">
-<button id="download" onclick="downloadPhoto()" disabled>
-⬇ DOWNLOAD PHOTO
-</button>
-
-<button id="save" onclick="savePhoto()" disabled>
-♡ SAVE PHOTO
-</button>
+<button class="action" id="start">ON CAMERA</button>
+<button class="action" id="capture" disabled>TAKE PHOTOS</button>
+</div>
+<div id="status">Nyalakan kamera terlebih dahulu.</div>
 </div>
 
-</section>
+<div>
+<h3>Preview Result</h3>
+<input id="caption" maxlength="30" placeholder="Tulis nama atau pesan..." >
+<canvas id="result" width="600" height="1800"></canvas>
+<div style="text-align:center">
+<button class="action" id="download" disabled>⬇ DOWNLOAD</button>
+<button class="action" id="save" disabled>♡ SAVE PHOTO</button>
+</div>
+<button class="action" id="back">← BACK TO TEMPLATES</button>
 </div>
 
-<!-- GALLERY -->
-<section class="card" style="max-width:1100px;margin:20px auto">
-<h2>♡ My Photo Gallery</h2>
+</div>
+</div>
+
+<!-- GALERI -->
+<div class="section">
+<h2>♡ My Gallery</h2>
 <div class="gallery" id="gallery"></div>
-</section>
+</div>
+
+</div>
 
 <script>
+
+// DATA TEMPLATE
+const themes={
+f1:{bg:"#d90020",frame:"#fff",ink:"#fff",deco:"🏎️  🏁  🏎️",title:"FORMULA RACING"},
+kitty:{bg:"#ffb6cf",frame:"#fff",ink:"#ce5282",deco:"🎀  ♡  🎀",title:"HELLO KITTY"},
+kuromi:{bg:"#342044",frame:"#f2d7ff",ink:"#fff",deco:"💜  ☠️  💜",title:"KUROMI CLUB"},
+polaroid:{bg:"#e9e4db",frame:"#fff",ink:"#66594e",deco:"📷  ♡  📷",title:"POLAROID"},
+vintage:{bg:"#d7b98e",frame:"#f6e8cd",ink:"#654b35",deco:"📷  ★  📷",title:"VINTAGE FILM"},
+y2k:{bg:"#eea8df",frame:"#fff",ink:"#fff",deco:"💿  ✦  💿",title:"Y2K BABY"},
+korean:{bg:"#f5dce8",frame:"#fffafa",ink:"#986b80",deco:"♡  ✿  ♡",title:"SEOUL DIARY"},
+cinema:{bg:"#171717",frame:"#eee",ink:"#fff",deco:"🎬  ★  🎬",title:"THE MOVIE"},
+love:{bg:"#ef9aaa",frame:"#fff0f3",ink:"#a63857",deco:"❤️  ♥  ❤️",title:"LOVE STORY"},
+neon:{bg:"#17152c",frame:"#282344",ink:"#fff",deco:"⚡  ✦  ⚡",title:"NEON PARTY"},
+flower:{bg:"#e4b7c9",frame:"#fff8fa",ink:"#9e5473",deco:"🌸  🌷  🌸",title:"FLOWER GARDEN"},
+newspaper:{bg:"#e8e5dc",frame:"#fff",ink:"#222",deco:"★ BREAKING NEWS ★",title:"THE DAILY"},
+summer:{bg:"#aee6f4",frame:"#fff",ink:"#337b9a",deco:"☀️  🌊  ☀️",title:"SUMMER DAYS"}
+};
+
+let selected="f1";
+let selectedCount=4;
+let layout="strip";
+let photos=[];
+let stream=null;
 
 const video=document.getElementById("video");
 const canvas=document.getElementById("result");
 const ctx=canvas.getContext("2d");
 
-let stream=null;
-let photos=[];
-let selected="f1";
+const booth=document.getElementById("booth");
+const statusEl=document.getElementById("status");
 
-const themes={
+// CATEGORY FILTER
+document.querySelectorAll(".category").forEach(btn=>{
+btn.onclick=()=>{
+document.querySelectorAll(".category").forEach(b=>b.classList.remove("active"));
+btn.classList.add("active");
 
-f1:{
-bg:"#d80020",frame:"#ffffff",ink:"#ffffff",
-accent:"#111111",top:"FORMULA ONE",
-deco:"🏎️ 🏁 🏎️",bottom:"RACE DAY"
-},
+const cat=btn.dataset.cat;
 
-kitty:{
-bg:"#ffb6cf",frame:"#ffffff",ink:"#d44c83",
-accent:"#ff6b9e",top:"HELLO KITTY",
-deco:"🎀 ♡ 🎀",bottom:"CUTIE MOMENTS"
-},
-
-kuromi:{
-bg:"#342044",frame:"#f2d7ff",ink:"#ffffff",
-accent:"#c48bff",top:"KUROMI CLUB",
-deco:"💜 ☠️ 💜",bottom:"LITTLE DEVIL"
-},
-
-cinema:{
-bg:"#171717",frame:"#eeeeee",ink:"#ffffff",
-accent:"#d6b15e",top:"THE MOVIE",
-deco:"🎬 ★ 🎬",bottom:"STARRING YOU"
-},
-
-y2k:{
-bg:"#eea8df",frame:"#ffffff",ink:"#ffffff",
-accent:"#9b51b6",top:"Y2K BABY",
-deco:"💿 ✦ 💿",bottom:"2000 VIBES"
-},
-
-korean:{
-bg:"#f5dce8",frame:"#fffafa",ink:"#986b80",
-accent:"#d69bb5",top:"SEOUL DIARY",
-deco:"♡ ✿ ♡",bottom:"OUR MOMENT"
-},
-
-vintage:{
-bg:"#d7b98e",frame:"#f6e8cd",ink:"#654b35",
-accent:"#936d48",top:"MEMORY FILM",
-deco:"📷 ★ 📷",bottom:"EST. FOREVER"
-},
-
-newspaper:{
-bg:"#e8e5dc",frame:"#ffffff",ink:"#222222",
-accent:"#222222",top:"THE DAILY",
-deco:"★ BREAKING NEWS ★",bottom:"SPECIAL EDITION"
-},
-
-love:{
-bg:"#ef9aaa",frame:"#fff0f3",ink:"#a63857",
-accent:"#ffffff",top:"LOVE STORY",
-deco:"❤️ ♥ ❤️",bottom:"MADE WITH LOVE"
-},
-
-coquette:{
-bg:"#f5dce5",frame:"#fffafa",ink:"#a85f7d",
-accent:"#d38aa8",top:"COQUETTE",
-deco:"🎀 ♡ 🎀",bottom:"PRETTY IN PINK"
-},
-
-racingblue:{
-bg:"#1458a4",frame:"#ffffff",ink:"#ffffff",
-accent:"#9fdcff",top:"RACING CLUB",
-deco:"🏁 🚘 🏁",bottom:"FULL SPEED"
-},
-
-strawberry:{
-bg:"#ffb9c7",frame:"#fff4f2",ink:"#c94b64",
-accent:"#ffffff",top:"STRAWBERRY",
-deco:"🍓 ♡ 🍓",bottom:"SWEET DAYS"
-},
-
-space:{
-bg:"#171b42",frame:"#dbe5ff",ink:"#ffffff",
-accent:"#a9bfff",top:"SPACE DIARY",
-deco:"🚀 ✦ 🌙",bottom:"TO THE MOON"
-},
-
-flower:{
-bg:"#e4b7c9",frame:"#fff8fa",ink:"#9e5473",
-accent:"#ffffff",top:"FLOWER GARDEN",
-deco:"🌸 🌷 🌸",bottom:"BLOOM WITH YOU"
-},
-
-blackpink:{
-bg:"#171717",frame:"#ffb4d5",ink:"#ffffff",
-accent:"#ff70b5",top:"BLACK PINK",
-deco:"🖤 💗 🖤",bottom:"PINK VENOM"
-},
-
-polaroid:{
-bg:"#e8e4dd",frame:"#ffffff",ink:"#66594e",
-accent:"#b69a82",top:"POLAROID",
-deco:"📸 ♡ 📸",bottom:"INSTANT MEMORIES"
-},
-
-summer:{
-bg:"#aee6f4",frame:"#ffffff",ink:"#337b9a",
-accent:"#ffbc65",top:"SUMMER DAYS",
-deco:"☀️ 🌊 ☀️",bottom:"SUNSHINE FOREVER"
-},
-
-christmas:{
-bg:"#145b42",frame:"#ffffff",ink:"#ffffff",
-accent:"#d9b85c",top:"MERRY CHRISTMAS",
-deco:"🎄 ❄️ 🎄",bottom:"HOLIDAY MAGIC"
-}
-
-};
-
-// TEMPLATE SELECTION
-
-document.querySelectorAll(".template").forEach(el=>{
-el.addEventListener("click",()=>{
-document.querySelectorAll(".template").forEach(x=>
-x.classList.remove("active"));
-el.classList.add("active");
-selected=el.dataset.theme;
-if(photos.length===3)drawResult();
+document.querySelectorAll(".template-card").forEach(card=>{
+card.style.display=(cat==="all"||card.dataset.cat===cat)?"block":"none";
 });
+};
+});
+
+// SELECT TEMPLATE
+document.querySelectorAll(".template-card").forEach(card=>{
+card.onclick=()=>{
+
+document.querySelectorAll(".template-card").forEach(c=>c.classList.remove("selected"));
+card.classList.add("selected");
+
+selected=card.dataset.theme;
+selectedCount=Number(card.dataset.count);
+layout=card.dataset.layout;
+
+document.getElementById("chosenName").innerText=
+"Selected: "+card.querySelector("h4").innerText;
+
+booth.classList.remove("hidden");
+booth.scrollIntoView({behavior:"smooth"});
+};
 });
 
 // CAMERA
-
-async function startCamera(){
-
+document.getElementById("start").onclick=async()=>{
 try{
-
-if(!navigator.mediaDevices?.getUserMedia){
-throw new Error("Gunakan browser yang mendukung kamera dan HTTPS.");
-}
+if(!navigator.mediaDevices?.getUserMedia)throw new Error("Gunakan HTTPS atau localhost.");
 
 stream=await navigator.mediaDevices.getUserMedia({
-video:{
-facingMode:"user",
-width:{ideal:1280},
-height:{ideal:960}
-},
+video:{facingMode:"user",width:{ideal:1280},height:{ideal:960}},
 audio:false
 });
 
 video.srcObject=stream;
-
 document.getElementById("capture").disabled=false;
-document.getElementById("status").innerText="Camera ready! ♡";
+statusEl.innerText="Camera ready! ♡";
 
-}catch(error){
-alert("Kamera gagal dibuka: "+error.message);
-}
-
-}
+}catch(e){alert("Kamera gagal dibuka: "+e.message);}
+};
 
 // COUNTDOWN
-
-function wait(ms){
-return new Promise(resolve=>setTimeout(resolve,ms));
-}
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
 
 async function countdown(){
-
 for(let i=3;i>0;i--){
-document.getElementById("status").innerText=
-"Get Ready... "+i;
+statusEl.innerText="Get ready... "+i;
 await wait(1000);
 }
-
 }
 
-// TAKE PHOTO
-
-async function takePhotos(){
-
+// TAKE PHOTOS
+document.getElementById("capture").onclick=async()=>{
 if(!stream)return;
 
 const btn=document.getElementById("capture");
@@ -423,12 +402,8 @@ btn.disabled=true;
 photos=[];
 
 try{
-
-for(let i=0;i<3;i++){
-
-document.getElementById("status").innerText=
-"Preparing photo "+(i+1);
-
+for(let i=0;i<selectedCount;i++){
+statusEl.innerText="Preparing photo "+(i+1);
 await countdown();
 
 if(!video.videoWidth)throw new Error("Kamera belum siap.");
@@ -443,260 +418,161 @@ c.scale(-1,1);
 c.drawImage(video,0,0);
 
 photos.push(temp);
-
-document.getElementById("status").innerText=
-"Photo "+(i+1)+" captured! ♡";
-
-await wait(500);
-
+statusEl.innerText="Photo "+(i+1)+" captured!";
+await wait(400);
 }
 
 drawResult();
-
 document.getElementById("download").disabled=false;
 document.getElementById("save").disabled=false;
+statusEl.innerText="All photos completed! ♡";
 
-document.getElementById("status").innerText=
-"Your photos are ready! ♡";
-
-}catch(error){
-alert(error.message);
-document.getElementById("status").innerText=error.message;
-}
+}catch(e){alert(e.message);statusEl.innerText=e.message;}
 
 btn.disabled=false;
+};
 
-}
-
-// DRAW PHOTO STRIP
-
+// DRAW TEMPLATE
 function drawResult(){
-
-if(photos.length!==3)return;
+if(!photos.length)return;
 
 const t=themes[selected];
+const isGrid=layout==="grid";
 
-canvas.width=700;
-canvas.height=1500;
+canvas.width=isGrid?1200:600;
+canvas.height=isGrid?1200:1800;
+
+const W=canvas.width,H=canvas.height;
 
 ctx.fillStyle=t.bg;
-ctx.fillRect(0,0,700,1500);
-
-// DECORATION TOP
+ctx.fillRect(0,0,W,H);
 
 ctx.fillStyle=t.ink;
 ctx.textAlign="center";
-ctx.font="bold 48px Arial";
-ctx.fillText(t.top,350,75);
+ctx.font="bold 46px Arial";
+ctx.fillText(t.title,W/2,75);
 
-ctx.font="35px Arial";
-ctx.fillText(t.deco,350,120);
+ctx.font="32px Arial";
+ctx.fillText(t.deco,W/2,125);
 
-// F1 CHECKERBOARD DECORATION
+const pad=isGrid?55:45;
+const gap=18;
 
-if(selected==="f1" || selected==="racingblue"){
+const photoW=isGrid?(W-pad*2-gap)/2:W-pad*2;
+const photoH=isGrid?440:360;
 
-for(let i=0;i<14;i++){
-for(let j=0;j<2;j++){
+photos.forEach((photo,i)=>{
 
-ctx.fillStyle=(i+j)%2===0?
-"#ffffff":"#222222";
+let x,y;
 
-ctx.fillRect(0+i*50,0+j*18,50,18);
-
-}
-}
-
-ctx.fillStyle=t.ink;
-ctx.fillText(t.top,350,95);
-}
-
-// NEWSPAPER DECORATION
-
-if(selected==="newspaper"){
-
-ctx.strokeStyle="#222";
-ctx.lineWidth=4;
-ctx.strokeRect(20,20,660,1460);
-
-ctx.font="bold 26px Georgia";
-ctx.fillText("EXTRA! EXTRA! EXTRA!",350,150);
-
-}
-
-// PHOTO FRAMES
-
-photos.forEach((photo,index)=>{
-
-const x=65;
-const y=175+index*405;
-const w=570;
-const h=355;
-
-// POLAROID STYLE
-
-if(selected==="polaroid"){
-ctx.fillStyle="#fff";
-ctx.fillRect(x-18,y-18,w+36,h+65);
+if(isGrid){
+x=pad+(i%2)*(photoW+gap);
+y=175+Math.floor(i/2)*(photoH+gap);
 }else{
-ctx.fillStyle=t.frame;
-ctx.fillRect(x-10,y-10,w+20,h+20);
+x=pad;
+y=175+i*(photoH+gap);
 }
 
-// CROP PHOTO
+ctx.fillStyle=t.frame;
+ctx.fillRect(x-8,y-8,photoW+16,photoH+16);
 
-const ratio=Math.max(w/photo.width,h/photo.height);
-const sw=w/ratio;
-const sh=h/ratio;
-
-const sx=(photo.width-sw)/2;
-const sy=(photo.height-sh)/2;
+const ratio=Math.max(photoW/photo.width,photoH/photo.height);
+const sw=photoW/ratio;
+const sh=photoH/ratio;
 
 ctx.save();
-
 ctx.beginPath();
-ctx.rect(x,y,w,h);
+ctx.rect(x,y,photoW,photoH);
 ctx.clip();
 
-ctx.drawImage(
-photo,
-sx,sy,sw,sh,
-x,y,w,h
-);
+ctx.drawImage(photo,
+(photo.width-sw)/2,
+(photo.height-sh)/2,
+sw,sh,x,y,photoW,photoH);
 
 ctx.restore();
 
-// FILM NUMBER
-
-if(selected==="cinema" || selected==="vintage"){
-ctx.fillStyle=t.ink;
-ctx.font="20px Arial";
-ctx.textAlign="right";
-ctx.fillText("FRAME 0"+(index+1),620,y+h+35);
+if(selected==="f1"||selected==="racingblue"){
+ctx.strokeStyle="#fff";
+ctx.lineWidth=5;
+ctx.strokeRect(x,y,photoW,photoH);
 }
-
 });
 
-// BOTTOM TEXT
-
 ctx.fillStyle=t.ink;
-ctx.textAlign="center";
-
 ctx.font="bold 35px Arial";
 
-let caption=document.getElementById("caption").value;
+const caption=document.getElementById("caption").value||"BEST MOMENTS ♡";
 
-ctx.fillText(
-caption || t.bottom,
-350,
-1440
-);
+ctx.fillText(caption,W/2,H-90);
 
-ctx.font="23px Arial";
-ctx.fillText("♡ DREAMY PHOTOBOOTH ♡",350,1480);
-
+ctx.font="22px Arial";
+ctx.fillText("♡ PINKIE PHOTOBOOTH ♡",W/2,H-35);
 }
+
+document.getElementById("caption").oninput=()=>{
+if(photos.length)drawResult();
+};
 
 // DOWNLOAD
-
-function downloadPhoto(){
-
+document.getElementById("download").onclick=()=>{
 const a=document.createElement("a");
 a.href=canvas.toDataURL("image/png");
-a.download="Dreamy-PhotoBooth.png";
+a.download="Pinkie-PhotoBooth.png";
 a.click();
+};
 
-}
-
-// SAVE GALLERY
-
-function savePhoto(){
-
-try{
-
-const data=canvas.toDataURL("image/png");
-
-let gallery=JSON.parse(
-localStorage.getItem("dreamyGallery")||"[]"
-);
-
-gallery.unshift(data);
-
-localStorage.setItem(
-"dreamyGallery",
-JSON.stringify(gallery.slice(0,15))
-);
-
-showGallery();
-
-alert("Photo saved successfully! ♡");
-
-}catch(error){
-alert("Galeri penuh. Silakan download foto.");
-}
-
-}
-
-// SHOW GALLERY
-
+// SAVE
 function showGallery(){
-
-const gallery=JSON.parse(
-localStorage.getItem("dreamyGallery")||"[]"
-);
-
+const gallery=JSON.parse(localStorage.getItem("pinkieGallery")||"[]");
 const area=document.getElementById("gallery");
 area.innerHTML="";
 
-gallery.forEach((image,index)=>{
-
+gallery.forEach((src,i)=>{
 const box=document.createElement("div");
-
 const img=document.createElement("img");
-img.src=image;
-img.alt="Foto "+(index+1);
-
+img.src=src;
 img.onclick=()=>{
 const a=document.createElement("a");
-a.href=image;
-a.download="photo-"+(index+1)+".png";
+a.href=src;
+a.download="photo-"+(i+1)+".png";
 a.click();
 };
-
 const del=document.createElement("button");
-del.textContent="Hapus";
+del.className="action";
+del.innerText="Hapus";
 del.onclick=()=>{
-
-if(confirm("Hapus foto ini?")){
-gallery.splice(index,1);
-
-localStorage.setItem(
-"dreamyGallery",
-JSON.stringify(gallery)
-);
-
+gallery.splice(i,1);
+localStorage.setItem("pinkieGallery",JSON.stringify(gallery));
 showGallery();
+};
+box.append(img,del);
+area.appendChild(box);
+});
 }
 
+document.getElementById("save").onclick=()=>{
+try{
+const gallery=JSON.parse(localStorage.getItem("pinkieGallery")||"[]");
+gallery.unshift(canvas.toDataURL("image/png"));
+localStorage.setItem("pinkieGallery",JSON.stringify(gallery.slice(0,15)));
+showGallery();
+alert("Foto berhasil disimpan! ♡");
+}catch(e){alert("Penyimpanan penuh. Download foto saja.");}
 };
 
-box.appendChild(img);
-box.appendChild(del);
-area.appendChild(box);
-
-});
-
-}
+// BACK
+document.getElementById("back").onclick=()=>{
+booth.classList.add("hidden");
+document.getElementById("catalog").scrollIntoView({behavior:"smooth"});
+};
 
 showGallery();
 
 window.addEventListener("beforeunload",()=>{
-if(stream){
-stream.getTracks().forEach(track=>track.stop());
-}
+if(stream)stream.getTracks().forEach(t=>t.stop());
 });
 
 </script>
-
 </body>
 </html>
