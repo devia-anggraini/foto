@@ -1,1 +1,599 @@
 
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photobooth Studio</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #fff0f7;
+  color: #443344;
+}
+
+header {
+  background: linear-gradient(120deg,#e9a8d0,#b9a6f5);
+  color: white;
+  text-align: center;
+  padding: 28px 15px;
+}
+
+header h1 {
+  font-size: 30px;
+  letter-spacing: 2px;
+}
+
+header p {
+  margin-top: 8px;
+}
+
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+}
+
+.panel {
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 5px 20px #d8b8ce55;
+}
+
+h2 {
+  font-size: 19px;
+  margin-bottom: 15px;
+}
+
+.camera {
+  background: #211c29;
+  border-radius: 15px;
+  overflow: hidden;
+  position: relative;
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+video {
+  width: 100%;
+  max-height: 450px;
+  object-fit: cover;
+  display: block;
+}
+
+#timer {
+  position: absolute;
+  font-size: 75px;
+  color: white;
+  font-weight: bold;
+  text-shadow: 0 2px 10px black;
+  display: none;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+button, .upload-btn {
+  border: none;
+  border-radius: 12px;
+  padding: 13px 18px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  background: #e9b4d5;
+  color: #55314e;
+}
+
+button:hover, .upload-btn:hover {
+  opacity: .8;
+}
+
+.primary {
+  background: #b89be9;
+  color: white;
+}
+
+.dark {
+  background: #51405c;
+  color: white;
+}
+
+select {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #e6c5dc;
+  background: white;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.template-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 12px;
+}
+
+.template {
+  padding: 10px;
+  border: 2px solid #eee;
+  border-radius: 13px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.template.active {
+  border-color: #b58de4;
+  background: #fbf3ff;
+}
+
+.template-preview {
+  height: 100px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.pink { background: linear-gradient(#f5c5dc,#fce6ef); }
+.purple { background: linear-gradient(#bba7e8,#e6dafa); }
+.black { background: linear-gradient(#333,#777); }
+
+.photos {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.photo-thumb {
+  width: 75px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 3px solid #e7b5d6;
+}
+
+.result-area {
+  text-align: center;
+}
+
+#result {
+  width: 100%;
+  max-width: 350px;
+  border-radius: 12px;
+  margin: 10px auto;
+  display: block;
+  background: white;
+}
+
+input[type=file] {
+  display: none;
+}
+
+.note {
+  color: #9b8196;
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+@media(max-width:600px) {
+  header h1 { font-size: 23px; }
+  .container { padding: 12px; }
+  .panel { padding: 15px; }
+  .template-grid { grid-template-columns: repeat(3,1fr); }
+  button, .upload-btn { flex: 1; text-align: center; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>PHOTOBOOTH STUDIO ✨</h1>
+  <p>Capture Your Beautiful Moments</p>
+</header>
+
+<div class="container">
+
+  <section class="panel">
+    <h2>📸 Kamera Photobooth</h2>
+
+    <div class="camera">
+      <video id="video" autoplay playsinline muted></video>
+      <div id="timer">3</div>
+    </div>
+
+    <div class="controls">
+      <button class="primary" onclick="startCamera()">📷 Aktifkan Kamera</button>
+      <button onclick="switchCamera()">🔄 Ganti Kamera</button>
+      <button class="dark" onclick="takePhotos()">✨ Mulai Foto</button>
+    </div>
+
+    <p class="note">Izinkan akses kamera saat browser meminta izin.</p>
+  </section>
+
+  <section class="panel">
+    <h2>🎨 Pilih Template</h2>
+
+    <div class="template-grid">
+
+      <div class="template active" onclick="chooseTemplate('pink',this)">
+        <div class="template-preview pink"></div>
+        Pink Aesthetic
+      </div>
+
+      <div class="template" onclick="chooseTemplate('purple',this)">
+        <div class="template-preview purple"></div>
+        Lavender
+      </div>
+
+      <div class="template" onclick="chooseTemplate('black',this)">
+        <div class="template-preview black"></div>
+        Classic
+      </div>
+
+    </div>
+
+    <br>
+
+    <label>Jumlah Foto</label>
+    <select id="photoCount">
+      <option value="3">3 Foto</option>
+      <option value="4">4 Foto</option>
+    </select>
+
+    <br><br>
+
+    <label class="upload-btn">
+      📂 Upload Template PNG
+      <input type="file" id="frameUpload" accept="image/png">
+    </label>
+
+    <p class="note">Gunakan PNG transparan agar foto terlihat di bagian lubang frame.</p>
+  </section>
+
+  <section class="panel">
+    <h2>🖼️ Foto Kamu</h2>
+
+    <div class="photos" id="photoList">
+      <p class="note">Belum ada foto.</p>
+    </div>
+
+    <div class="controls">
+      <label class="upload-btn">
+        Upload dari Galeri
+        <input type="file" id="galleryUpload" accept="image/*" multiple>
+      </label>
+      <button onclick="resetPhotos()">Hapus Semua</button>
+    </div>
+  </section>
+
+  <section class="panel result-area">
+    <h2>💖 Hasil Photobooth</h2>
+
+    <canvas id="result"></canvas>
+
+    <div class="controls">
+      <button class="primary" onclick="makeResult()">Buat Hasil Foto</button>
+      <button class="dark" onclick="downloadResult()">⬇ Download PNG</button>
+    </div>
+
+    <p class="note">Hasil foto bisa disimpan langsung ke perangkat.</p>
+  </section>
+
+</div>
+
+<script>
+const video = document.getElementById("video");
+const timer = document.getElementById("timer");
+const canvas = document.getElementById("result");
+const ctx = canvas.getContext("2d");
+
+let stream = null;
+let facing = "user";
+let photos = [];
+let selectedTemplate = "pink";
+let customFrame = null;
+
+const W = 600;
+const H = 1200;
+
+async function startCamera() {
+  try {
+    if (stream) {
+      stream.getTracks().forEach(t => t.stop());
+    }
+
+    stream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: facing,
+        width: {ideal: 1280},
+        height: {ideal: 720}
+      },
+      audio: false
+    });
+
+    video.srcObject = stream;
+    await video.play();
+
+  } catch (error) {
+    alert("Kamera tidak bisa diakses. Periksa izin kamera browser.");
+  }
+}
+
+async function switchCamera() {
+  facing = facing === "user" ? "environment" : "user";
+  await startCamera();
+}
+
+function chooseTemplate(name, element) {
+  selectedTemplate = name;
+  document.querySelectorAll(".template").forEach(el =>
+    el.classList.remove("active")
+  );
+  element.classList.add("active");
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve,ms));
+}
+
+function capturePhoto() {
+  if (!video.videoWidth) return null;
+
+  const c = document.createElement("canvas");
+  c.width = video.videoWidth;
+  c.height = video.videoHeight;
+
+  const x = c.getContext("2d");
+
+  if (facing === "user") {
+    x.translate(c.width,0);
+    x.scale(-1,1);
+  }
+
+  x.drawImage(video,0,0,c.width,c.height);
+  return c.toDataURL("image/jpeg",0.92);
+}
+
+async function takePhotos() {
+  if (!stream) {
+    alert("Aktifkan kamera terlebih dahulu!");
+    return;
+  }
+
+  photos = [];
+
+  const total = Number(document.getElementById("photoCount").value);
+
+  for (let i=0; i<total; i++) {
+    for (let n=3; n>=1; n--) {
+      timer.style.display = "block";
+      timer.textContent = n;
+      await sleep(1000);
+    }
+
+    timer.textContent = "📸";
+    await sleep(300);
+
+    const photo = capturePhoto();
+    if (photo) photos.push(photo);
+
+    updatePhotos();
+    await sleep(500);
+  }
+
+  timer.style.display = "none";
+  makeResult();
+}
+
+function updatePhotos() {
+  const area = document.getElementById("photoList");
+  area.innerHTML = "";
+
+  if (!photos.length) {
+    area.innerHTML = "<p class='note'>Belum ada foto.</p>";
+    return;
+  }
+
+  photos.forEach(src => {
+    const img = document.createElement("img");
+    img.src = src;
+    img.className = "photo-thumb";
+    area.appendChild(img);
+  });
+}
+
+function resetPhotos() {
+  photos = [];
+  updatePhotos();
+}
+
+document.getElementById("galleryUpload").addEventListener("change", e => {
+  const files = [...e.target.files];
+  const total = Number(document.getElementById("photoCount").value);
+
+  files.forEach(file => {
+    if (!file.type.startsWith("image/")) return;
+
+    if (photos.length >= total) return;
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      photos.push(reader.result);
+      updatePhotos();
+    };
+
+    reader.readAsDataURL(file);
+  });
+
+  e.target.value = "";
+});
+
+document.getElementById("frameUpload").addEventListener("change", e => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = () => {
+    const img = new Image();
+
+    img.onload = () => {
+      customFrame = img;
+      alert("Template berhasil dimuat!");
+    };
+
+    img.src = reader.result;
+  };
+
+  reader.readAsDataURL(file);
+});
+
+function roundedRect(x,y,w,h,r,color) {
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.roundRect(x,y,w,h,r);
+  ctx.fill();
+}
+
+function drawCover(img,x,y,w,h) {
+  const scale = Math.max(w/img.width,h/img.height);
+  const sw = w/scale;
+  const sh = h/scale;
+  const sx = (img.width-sw)/2;
+  const sy = (img.height-sh)/2;
+
+  ctx.drawImage(img,sx,sy,sw,sh,x,y,w,h);
+}
+
+async function makeResult() {
+  if (!photos.length) {
+    alert("Ambil atau upload foto terlebih dahulu!");
+    return;
+  }
+
+  canvas.width = W;
+  canvas.height = H;
+
+  let bg = "#f8d7e9";
+  let accent = "#a65c8d";
+  let ink = "#653b57";
+
+  if (selectedTemplate === "purple") {
+    bg = "#dcd1f5";
+    accent = "#9175c5";
+    ink = "#574477";
+  }
+
+  if (selectedTemplate === "black") {
+    bg = "#25232b";
+    accent = "#ffffff";
+    ink = "#ffffff";
+  }
+
+  ctx.fillStyle = bg;
+  ctx.fillRect(0,0,W,H);
+
+  // Header
+  ctx.fillStyle = ink;
+  ctx.textAlign = "center";
+  ctx.font = "bold 42px Arial";
+  ctx.fillText("PHOTOBOOTH",W/2,75);
+
+  ctx.font = "22px Arial";
+  ctx.fillText("SPECIAL MOMENTS ♡",W/2,112);
+
+  const count = photos.length;
+  const gap = 20;
+  const margin = 45;
+  const top = 150;
+  const footer = 110;
+  const photoW = W - margin*2;
+  const photoH = (H-top-footer-gap*(count-1)-50)/count;
+
+  for (let i=0; i<count; i++) {
+    const img = new Image();
+
+    await new Promise(resolve => {
+      img.onload = resolve;
+      img.onerror = resolve;
+      img.src = photos[i];
+    });
+
+    const y = top+i*(photoH+gap);
+
+    ctx.save();
+
+    roundedRect(margin-7,y-7,photoW+14,photoH+14,12,"#ffffff");
+
+    ctx.beginPath();
+    ctx.roundRect(margin,y,photoW,photoH,8);
+    ctx.clip();
+
+    if (img.complete && img.naturalWidth) {
+      drawCover(img,margin,y,photoW,photoH);
+    }
+
+    ctx.restore();
+  }
+
+  // Frame PNG transparan di atas foto
+  if (customFrame) {
+    ctx.drawImage(customFrame,0,0,W,H);
+  }
+
+  // Footer
+  ctx.fillStyle = ink;
+  ctx.textAlign = "center";
+  ctx.font = "bold 25px Arial";
+  ctx.fillText("THANK YOU FOR THE MEMORIES",W/2,H-65);
+
+  ctx.font = "19px Arial";
+  ctx.fillText("♡ FOREVER TOGETHER ♡",W/2,H-32);
+}
+
+function downloadResult() {
+  if (!photos.length) {
+    alert("Buat hasil foto terlebih dahulu!");
+    return;
+  }
+
+  makeResult().then(() => {
+    const link = document.createElement("a");
+    link.download = "photobooth-result.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  });
+}
+
+// Tampilkan kanvas awal
+canvas.width = W;
+canvas.height = H;
+ctx.fillStyle = "#f8d7e9";
+ctx.fillRect(0,0,W,H);
+ctx.fillStyle = "#a65c8d";
+ctx.textAlign = "center";
+ctx.font = "bold 35px Arial";
+ctx.fillText("YOUR PHOTOBOOTH",W/2,550);
+ctx.font = "25px Arial";
+ctx.fillText("♡ YOUR MEMORIES HERE ♡",W/2,610);
+
+</script>
+
+</body>
+</html>
+
