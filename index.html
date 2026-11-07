@@ -4,147 +4,148 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SnapBooth Studio</title>
+<title>Dreamy PhotoBooth</title>
 
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;500;600;700;800&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+ font-family:'Poppins',sans-serif;
+ background:#fff1f5;
+ color:#493642;
+ padding:20px;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    background: #fff0f5;
-    color: #543b49;
-    padding: 20px;
+header{text-align:center;padding:30px 10px}
+header h1{font-size:38px;color:#df78a0}
+header p{margin-top:8px;color:#957482}
+
+.container{
+ max-width:1100px;
+ margin:auto;
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:20px;
 }
 
-header {
-    text-align: center;
-    padding: 25px;
+.card{
+ background:white;
+ padding:22px;
+ border-radius:22px;
+ box-shadow:0 5px 25px #d99bb522;
 }
 
-header h1 {
-    font-size: 38px;
-    color: #df78a0;
+h2{color:#d66f98;margin-bottom:15px}
+
+.camera{
+ background:#171717;
+ border-radius:16px;
+ overflow:hidden;
 }
 
-header p {
-    margin-top: 10px;
+video{
+ width:100%;
+ display:block;
+ transform:scaleX(-1);
 }
 
-.container {
-    max-width: 1100px;
-    margin: auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+button{
+ border:none;
+ padding:12px 17px;
+ margin:5px;
+ border-radius:12px;
+ background:#e987ab;
+ color:white;
+ font-weight:700;
+ cursor:pointer;
 }
 
-.card {
-    background: white;
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0 5px 20px #dba6ba44;
+button:hover{opacity:.8}
+button:disabled{opacity:.4;cursor:not-allowed}
+
+.templates{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:10px;
+ max-height:410px;
+ overflow-y:auto;
 }
 
-h2 {
-    margin-bottom: 15px;
-    color: #d66f98;
+.template{
+ min-height:85px;
+ border:2px solid #f2d2df;
+ border-radius:13px;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ cursor:pointer;
+ font-size:13px;
+ font-weight:700;
+ text-align:center;
+ padding:8px;
+ transition:.2s;
 }
 
-.camera {
-    width: 100%;
-    background: #222;
-    border-radius: 15px;
-    overflow: hidden;
+.template:hover{transform:translateY(-3px)}
+
+.template.active{
+ border:3px solid #df78a0;
+ background:#ffe5ef;
 }
 
-video {
-    width: 100%;
-    display: block;
-    transform: scaleX(-1);
+.template span{font-size:24px}
+
+input{
+ width:100%;
+ padding:12px;
+ border:1px solid #efc8d9;
+ border-radius:10px;
+ margin:12px 0;
+ font-family:inherit;
 }
 
-button {
-    border: none;
-    padding: 12px 17px;
-    border-radius: 12px;
-    cursor: pointer;
-    margin: 5px;
-    background: #e987ab;
-    color: white;
-    font-weight: bold;
+canvas{
+ width:100%;
+ max-width:350px;
+ display:block;
+ margin:20px auto;
+ border-radius:10px;
 }
 
-button:hover {
-    background: #d86b95;
+#status{
+ text-align:center;
+ margin:12px;
+ color:#d66f98;
+ font-weight:700;
+ min-height:25px;
 }
 
-button:disabled {
-    opacity: .5;
-    cursor: not-allowed;
+.gallery{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:10px;
 }
 
-.templates {
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    gap: 10px;
+.gallery img{
+ width:100%;
+ border-radius:10px;
+ cursor:pointer;
 }
 
-.template {
-    padding: 20px 5px;
-    border: 2px solid #f5c6d8;
-    border-radius: 12px;
-    text-align: center;
-    cursor: pointer;
-    font-weight: bold;
+.gallery button{
+ width:100%;
+ margin:4px 0;
+ font-size:11px;
+ padding:7px;
 }
 
-.template.active {
-    border: 3px solid #df78a0;
-    background: #ffe3ed;
-}
-
-input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid pink;
-    border-radius: 10px;
-    margin: 12px 0;
-}
-
-canvas {
-    width: 100%;
-    max-width: 350px;
-    display: block;
-    margin: 20px auto;
-    border-radius: 10px;
-}
-
-.gallery {
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    gap: 10px;
-}
-
-.gallery img {
-    width: 100%;
-    border-radius: 10px;
-}
-
-#status {
-    text-align: center;
-    margin: 12px;
-    color: #d66f98;
-    font-weight: bold;
-}
-
-@media(max-width:750px) {
-    .container {
-        grid-template-columns: 1fr;
-    }
+@media(max-width:750px){
+ .container{grid-template-columns:1fr}
+ header h1{font-size:29px}
+ .templates{grid-template-columns:repeat(3,1fr)}
 }
 </style>
 </head>
@@ -152,345 +153,548 @@ canvas {
 <body>
 
 <header>
-    <h1>♡ SnapBooth Studio ♡</h1>
-    <p>Capture your beautiful moments!</p>
+<h1>♡ Dreamy PhotoBooth ♡</h1>
+<p>Capture your favorite memories!</p>
 </header>
 
 <div class="container">
 
-<!-- KAMERA -->
-<div class="card">
-
+<!-- CAMERA -->
+<section class="card">
 <h2>📸 Camera Booth</h2>
 
 <div class="camera">
-    <video id="video" autoplay playsinline></video>
+<video id="video" autoplay playsinline muted></video>
 </div>
 
-<div style="text-align:center">
-    <button onclick="startCamera()">ON CAMERA</button>
-    <button onclick="takePhotos()" id="capture" disabled>
-        TAKE PHOTO
-    </button>
+<div style="text-align:center;margin-top:15px">
+<button onclick="startCamera()">ON CAMERA</button>
+<button id="capture" onclick="takePhotos()" disabled>
+TAKE PHOTO
+</button>
 </div>
 
-<div id="status">Nyalakan kamera terlebih dahulu.</div>
-
-</div>
+<div id="status">Nyalakan kamera terlebih dahulu ♡</div>
+</section>
 
 <!-- TEMPLATE -->
-<div class="card">
+<section class="card">
 
 <h2>♡ Choose Your Template</h2>
 
-<div class="templates">
+<div class="templates" id="templates">
 
-<div class="template active" onclick="chooseTemplate('pink',this)">
-🌸<br>Pink
-</div>
-
-<div class="template" onclick="chooseTemplate('purple',this)">
-💜<br>Lavender
-</div>
-
-<div class="template" onclick="chooseTemplate('blue',this)">
-🩵<br>Sky Blue
-</div>
-
-<div class="template" onclick="chooseTemplate('black',this)">
-🖤<br>Dark
-</div>
-
-<div class="template" onclick="chooseTemplate('cream',this)">
-🤎<br>Vintage
-</div>
-
-<div class="template" onclick="chooseTemplate('green',this)">
-🍀<br>Mint
-</div>
-
-<div class="template" onclick="chooseTemplate('yellow',this)">
-🌼<br>Sunshine
-</div>
-
-<div class="template" onclick="chooseTemplate('white',this)">
-♡<br>Minimal
-</div>
-
-<div class="template" onclick="chooseTemplate('red',this)">
-❤️<br>Love
-</div>
+<div class="template active" data-theme="f1"><span>🏎️</span>F1 Racing</div>
+<div class="template" data-theme="kitty"><span>🎀</span>Hello Kitty</div>
+<div class="template" data-theme="kuromi"><span>💜</span>Kuromi</div>
+<div class="template" data-theme="cinema"><span>🎬</span>Cinema</div>
+<div class="template" data-theme="y2k"><span>💿</span>Y2K</div>
+<div class="template" data-theme="korean"><span>🇰🇷</span>Korean</div>
+<div class="template" data-theme="vintage"><span>📷</span>Vintage</div>
+<div class="template" data-theme="newspaper"><span>📰</span>Newspaper</div>
+<div class="template" data-theme="love"><span>❤️</span>Love</div>
+<div class="template" data-theme="coquette"><span>🎀</span>Coquette</div>
+<div class="template" data-theme="racingblue"><span>🏁</span>Blue Racing</div>
+<div class="template" data-theme="strawberry"><span>🍓</span>Strawberry</div>
+<div class="template" data-theme="space"><span>🚀</span>Space</div>
+<div class="template" data-theme="flower"><span>🌸</span>Flower</div>
+<div class="template" data-theme="blackpink"><span>🖤</span>Black Pink</div>
+<div class="template" data-theme="polaroid"><span>📸</span>Polaroid</div>
+<div class="template" data-theme="summer"><span>☀️</span>Summer</div>
+<div class="template" data-theme="christmas"><span>🎄</span>Christmas</div>
 
 </div>
 
-<input type="text" id="caption"
-placeholder="Tulis pesan kamu di sini..."
-maxlength="30"
+<input id="caption" maxlength="30"
+placeholder="Tulis nama atau pesan..."
 oninput="drawResult()">
 
-<h2>Preview Foto</h2>
+<h2>Preview Photo</h2>
 
 <canvas id="result" width="700" height="1500"></canvas>
 
 <div style="text-align:center">
-    <button onclick="downloadPhoto()" id="download" disabled>
-        ⬇ DOWNLOAD PHOTO
-    </button>
+<button id="download" onclick="downloadPhoto()" disabled>
+⬇ DOWNLOAD PHOTO
+</button>
 
-    <button onclick="savePhoto()" id="save" disabled>
-        ♡ SAVE TO GALLERY
-    </button>
+<button id="save" onclick="savePhoto()" disabled>
+♡ SAVE PHOTO
+</button>
 </div>
 
+</section>
 </div>
 
-</div>
-
-<!-- GALERI -->
-<div class="card" style="max-width:1100px;margin:20px auto">
-<h2>♡ My Gallery</h2>
+<!-- GALLERY -->
+<section class="card" style="max-width:1100px;margin:20px auto">
+<h2>♡ My Photo Gallery</h2>
 <div class="gallery" id="gallery"></div>
-</div>
+</section>
 
 <script>
 
-const video = document.getElementById("video");
-const canvas = document.getElementById("result");
-const ctx = canvas.getContext("2d");
+const video=document.getElementById("video");
+const canvas=document.getElementById("result");
+const ctx=canvas.getContext("2d");
 
-let stream;
-let photos = [];
-let template = "pink";
+let stream=null;
+let photos=[];
+let selected="f1";
 
-const themes = {
-    pink: ["#ffe0eb","#ffffff","#d65f8c"],
-    purple: ["#e9dcff","#ffffff","#8059ad"],
-    blue: ["#dceeff","#ffffff","#5487bd"],
-    black: ["#222222","#eeeeee","#ffffff"],
-    cream: ["#e9d0a8","#fff5df","#765333"],
-    green: ["#d9f2e5","#ffffff","#478568"],
-    yellow: ["#fff0b8","#ffffff","#b58a25"],
-    white: ["#eeeeee","#ffffff","#444444"],
-    red: ["#ffdada","#ffffff","#b83d50"]
+const themes={
+
+f1:{
+bg:"#d80020",frame:"#ffffff",ink:"#ffffff",
+accent:"#111111",top:"FORMULA ONE",
+deco:"🏎️ 🏁 🏎️",bottom:"RACE DAY"
+},
+
+kitty:{
+bg:"#ffb6cf",frame:"#ffffff",ink:"#d44c83",
+accent:"#ff6b9e",top:"HELLO KITTY",
+deco:"🎀 ♡ 🎀",bottom:"CUTIE MOMENTS"
+},
+
+kuromi:{
+bg:"#342044",frame:"#f2d7ff",ink:"#ffffff",
+accent:"#c48bff",top:"KUROMI CLUB",
+deco:"💜 ☠️ 💜",bottom:"LITTLE DEVIL"
+},
+
+cinema:{
+bg:"#171717",frame:"#eeeeee",ink:"#ffffff",
+accent:"#d6b15e",top:"THE MOVIE",
+deco:"🎬 ★ 🎬",bottom:"STARRING YOU"
+},
+
+y2k:{
+bg:"#eea8df",frame:"#ffffff",ink:"#ffffff",
+accent:"#9b51b6",top:"Y2K BABY",
+deco:"💿 ✦ 💿",bottom:"2000 VIBES"
+},
+
+korean:{
+bg:"#f5dce8",frame:"#fffafa",ink:"#986b80",
+accent:"#d69bb5",top:"SEOUL DIARY",
+deco:"♡ ✿ ♡",bottom:"OUR MOMENT"
+},
+
+vintage:{
+bg:"#d7b98e",frame:"#f6e8cd",ink:"#654b35",
+accent:"#936d48",top:"MEMORY FILM",
+deco:"📷 ★ 📷",bottom:"EST. FOREVER"
+},
+
+newspaper:{
+bg:"#e8e5dc",frame:"#ffffff",ink:"#222222",
+accent:"#222222",top:"THE DAILY",
+deco:"★ BREAKING NEWS ★",bottom:"SPECIAL EDITION"
+},
+
+love:{
+bg:"#ef9aaa",frame:"#fff0f3",ink:"#a63857",
+accent:"#ffffff",top:"LOVE STORY",
+deco:"❤️ ♥ ❤️",bottom:"MADE WITH LOVE"
+},
+
+coquette:{
+bg:"#f5dce5",frame:"#fffafa",ink:"#a85f7d",
+accent:"#d38aa8",top:"COQUETTE",
+deco:"🎀 ♡ 🎀",bottom:"PRETTY IN PINK"
+},
+
+racingblue:{
+bg:"#1458a4",frame:"#ffffff",ink:"#ffffff",
+accent:"#9fdcff",top:"RACING CLUB",
+deco:"🏁 🚘 🏁",bottom:"FULL SPEED"
+},
+
+strawberry:{
+bg:"#ffb9c7",frame:"#fff4f2",ink:"#c94b64",
+accent:"#ffffff",top:"STRAWBERRY",
+deco:"🍓 ♡ 🍓",bottom:"SWEET DAYS"
+},
+
+space:{
+bg:"#171b42",frame:"#dbe5ff",ink:"#ffffff",
+accent:"#a9bfff",top:"SPACE DIARY",
+deco:"🚀 ✦ 🌙",bottom:"TO THE MOON"
+},
+
+flower:{
+bg:"#e4b7c9",frame:"#fff8fa",ink:"#9e5473",
+accent:"#ffffff",top:"FLOWER GARDEN",
+deco:"🌸 🌷 🌸",bottom:"BLOOM WITH YOU"
+},
+
+blackpink:{
+bg:"#171717",frame:"#ffb4d5",ink:"#ffffff",
+accent:"#ff70b5",top:"BLACK PINK",
+deco:"🖤 💗 🖤",bottom:"PINK VENOM"
+},
+
+polaroid:{
+bg:"#e8e4dd",frame:"#ffffff",ink:"#66594e",
+accent:"#b69a82",top:"POLAROID",
+deco:"📸 ♡ 📸",bottom:"INSTANT MEMORIES"
+},
+
+summer:{
+bg:"#aee6f4",frame:"#ffffff",ink:"#337b9a",
+accent:"#ffbc65",top:"SUMMER DAYS",
+deco:"☀️ 🌊 ☀️",bottom:"SUNSHINE FOREVER"
+},
+
+christmas:{
+bg:"#145b42",frame:"#ffffff",ink:"#ffffff",
+accent:"#d9b85c",top:"MERRY CHRISTMAS",
+deco:"🎄 ❄️ 🎄",bottom:"HOLIDAY MAGIC"
+}
+
 };
 
-async function startCamera() {
-    try {
-        stream = await navigator.mediaDevices.getUserMedia({
-            video: {
-                facingMode: "user"
-            },
-            audio: false
-        });
+// TEMPLATE SELECTION
 
-        video.srcObject = stream;
+document.querySelectorAll(".template").forEach(el=>{
+el.addEventListener("click",()=>{
+document.querySelectorAll(".template").forEach(x=>
+x.classList.remove("active"));
+el.classList.add("active");
+selected=el.dataset.theme;
+if(photos.length===3)drawResult();
+});
+});
 
-        document.getElementById("capture").disabled = false;
-        document.getElementById("status").innerText =
-            "Camera ready! ♡";
+// CAMERA
 
-    } catch(error) {
-        alert("Kamera tidak bisa dibuka. Izinkan akses kamera!");
-    }
+async function startCamera(){
+
+try{
+
+if(!navigator.mediaDevices?.getUserMedia){
+throw new Error("Gunakan browser yang mendukung kamera dan HTTPS.");
 }
 
-function chooseTemplate(name, element) {
-    template = name;
+stream=await navigator.mediaDevices.getUserMedia({
+video:{
+facingMode:"user",
+width:{ideal:1280},
+height:{ideal:960}
+},
+audio:false
+});
 
-    document.querySelectorAll(".template").forEach(el => {
-        el.classList.remove("active");
-    });
+video.srcObject=stream;
 
-    element.classList.add("active");
+document.getElementById("capture").disabled=false;
+document.getElementById("status").innerText="Camera ready! ♡";
 
-    if(photos.length === 3) {
-        drawResult();
-    }
+}catch(error){
+alert("Kamera gagal dibuka: "+error.message);
 }
 
-function countdown(seconds) {
-    return new Promise(resolve => {
-        let number = seconds;
-
-        document.getElementById("status").innerText = number;
-
-        const timer = setInterval(() => {
-            number--;
-
-            if(number > 0) {
-                document.getElementById("status").innerText = number;
-            } else {
-                clearInterval(timer);
-                resolve();
-            }
-        }, 1000);
-    });
 }
 
-async function takePhotos() {
+// COUNTDOWN
 
-    if(!stream) return;
-
-    photos = [];
-
-    const btn = document.getElementById("capture");
-    btn.disabled = true;
-
-    for(let i = 0; i < 3; i++) {
-
-        document.getElementById("status").innerText =
-            `Prepare Photo ${i+1} ♡`;
-
-        await countdown(3);
-
-        const temp = document.createElement("canvas");
-        temp.width = video.videoWidth;
-        temp.height = video.videoHeight;
-
-        const c = temp.getContext("2d");
-
-        c.translate(temp.width,0);
-        c.scale(-1,1);
-        c.drawImage(video,0,0);
-
-        photos.push(temp);
-
-        document.getElementById("status").innerText =
-            `Photo ${i+1} captured! ♡`;
-
-        await new Promise(resolve => setTimeout(resolve,500));
-    }
-
-    drawResult();
-
-    document.getElementById("download").disabled = false;
-    document.getElementById("save").disabled = false;
-
-    document.getElementById("status").innerText =
-        "Your photos are ready! ♡";
-
-    btn.disabled = false;
+function wait(ms){
+return new Promise(resolve=>setTimeout(resolve,ms));
 }
 
-function drawResult() {
+async function countdown(){
 
-    if(photos.length !== 3) return;
-
-    const colors = themes[template];
-
-    canvas.width = 700;
-    canvas.height = 1500;
-
-    ctx.fillStyle = colors[0];
-    ctx.fillRect(0,0,700,1500);
-
-    ctx.fillStyle = colors[2];
-    ctx.textAlign = "center";
-    ctx.font = "bold 45px Arial";
-    ctx.fillText("♡ PHOTO BOOTH ♡",350,75);
-
-    photos.forEach((photo,index) => {
-
-        const x = 55;
-        const y = 130 + index * 415;
-        const w = 590;
-        const h = 380;
-
-        ctx.fillStyle = colors[1];
-        ctx.fillRect(x-10,y-10,w+20,h+20);
-
-        const ratio = Math.max(w/photo.width,h/photo.height);
-        const sw = w/ratio;
-        const sh = h/ratio;
-        const sx = (photo.width-sw)/2;
-        const sy = (photo.height-sh)/2;
-
-        ctx.save();
-        ctx.beginPath();
-        ctx.rect(x,y,w,h);
-        ctx.clip();
-
-        ctx.drawImage(
-            photo,
-            sx,sy,sw,sh,
-            x,y,w,h
-        );
-
-        ctx.restore();
-    });
-
-    ctx.fillStyle = colors[2];
-    ctx.textAlign = "center";
-    ctx.font = "bold 32px Arial";
-
-    const text = document.getElementById("caption").value ||
-                 "BEST MOMENTS ♡";
-
-    ctx.fillText(text,350,1410);
-
-    ctx.font = "24px Arial";
-    ctx.fillText("SNAPBOOTH STUDIO",350,1460);
+for(let i=3;i>0;i--){
+document.getElementById("status").innerText=
+"Get Ready... "+i;
+await wait(1000);
 }
 
-function downloadPhoto() {
-
-    const link = document.createElement("a");
-
-    link.download = "my-photobooth.png";
-    link.href = canvas.toDataURL("image/png");
-
-    link.click();
 }
 
-function savePhoto() {
+// TAKE PHOTO
 
-    const image = canvas.toDataURL("image/png");
+async function takePhotos(){
 
-    let gallery = JSON.parse(
-        localStorage.getItem("myGallery") || "[]"
-    );
+if(!stream)return;
 
-    gallery.unshift(image);
+const btn=document.getElementById("capture");
+btn.disabled=true;
+photos=[];
 
-    localStorage.setItem(
-        "myGallery",
-        JSON.stringify(gallery.slice(0,20))
-    );
+try{
 
-    showGallery();
+for(let i=0;i<3;i++){
 
-    alert("Foto berhasil disimpan! ♡");
+document.getElementById("status").innerText=
+"Preparing photo "+(i+1);
+
+await countdown();
+
+if(!video.videoWidth)throw new Error("Kamera belum siap.");
+
+const temp=document.createElement("canvas");
+temp.width=video.videoWidth;
+temp.height=video.videoHeight;
+
+const c=temp.getContext("2d");
+c.translate(temp.width,0);
+c.scale(-1,1);
+c.drawImage(video,0,0);
+
+photos.push(temp);
+
+document.getElementById("status").innerText=
+"Photo "+(i+1)+" captured! ♡";
+
+await wait(500);
+
 }
 
-function showGallery() {
+drawResult();
 
-    const gallery = JSON.parse(
-        localStorage.getItem("myGallery") || "[]"
-    );
+document.getElementById("download").disabled=false;
+document.getElementById("save").disabled=false;
 
-    const container = document.getElementById("gallery");
+document.getElementById("status").innerText=
+"Your photos are ready! ♡";
 
-    container.innerHTML = "";
+}catch(error){
+alert(error.message);
+document.getElementById("status").innerText=error.message;
+}
 
-    gallery.forEach((image,index) => {
+btn.disabled=false;
 
-        const img = document.createElement("img");
+}
 
-        img.src = image;
-        img.alt = "Photo " + (index+1);
+// DRAW PHOTO STRIP
 
-        img.onclick = () => {
-            const link = document.createElement("a");
-            link.href = image;
-            link.download = "photobooth-" + (index+1) + ".png";
-            link.click();
-        };
+function drawResult(){
 
-        container.appendChild(img);
-    });
+if(photos.length!==3)return;
+
+const t=themes[selected];
+
+canvas.width=700;
+canvas.height=1500;
+
+ctx.fillStyle=t.bg;
+ctx.fillRect(0,0,700,1500);
+
+// DECORATION TOP
+
+ctx.fillStyle=t.ink;
+ctx.textAlign="center";
+ctx.font="bold 48px Arial";
+ctx.fillText(t.top,350,75);
+
+ctx.font="35px Arial";
+ctx.fillText(t.deco,350,120);
+
+// F1 CHECKERBOARD DECORATION
+
+if(selected==="f1" || selected==="racingblue"){
+
+for(let i=0;i<14;i++){
+for(let j=0;j<2;j++){
+
+ctx.fillStyle=(i+j)%2===0?
+"#ffffff":"#222222";
+
+ctx.fillRect(0+i*50,0+j*18,50,18);
+
+}
+}
+
+ctx.fillStyle=t.ink;
+ctx.fillText(t.top,350,95);
+}
+
+// NEWSPAPER DECORATION
+
+if(selected==="newspaper"){
+
+ctx.strokeStyle="#222";
+ctx.lineWidth=4;
+ctx.strokeRect(20,20,660,1460);
+
+ctx.font="bold 26px Georgia";
+ctx.fillText("EXTRA! EXTRA! EXTRA!",350,150);
+
+}
+
+// PHOTO FRAMES
+
+photos.forEach((photo,index)=>{
+
+const x=65;
+const y=175+index*405;
+const w=570;
+const h=355;
+
+// POLAROID STYLE
+
+if(selected==="polaroid"){
+ctx.fillStyle="#fff";
+ctx.fillRect(x-18,y-18,w+36,h+65);
+}else{
+ctx.fillStyle=t.frame;
+ctx.fillRect(x-10,y-10,w+20,h+20);
+}
+
+// CROP PHOTO
+
+const ratio=Math.max(w/photo.width,h/photo.height);
+const sw=w/ratio;
+const sh=h/ratio;
+
+const sx=(photo.width-sw)/2;
+const sy=(photo.height-sh)/2;
+
+ctx.save();
+
+ctx.beginPath();
+ctx.rect(x,y,w,h);
+ctx.clip();
+
+ctx.drawImage(
+photo,
+sx,sy,sw,sh,
+x,y,w,h
+);
+
+ctx.restore();
+
+// FILM NUMBER
+
+if(selected==="cinema" || selected==="vintage"){
+ctx.fillStyle=t.ink;
+ctx.font="20px Arial";
+ctx.textAlign="right";
+ctx.fillText("FRAME 0"+(index+1),620,y+h+35);
+}
+
+});
+
+// BOTTOM TEXT
+
+ctx.fillStyle=t.ink;
+ctx.textAlign="center";
+
+ctx.font="bold 35px Arial";
+
+let caption=document.getElementById("caption").value;
+
+ctx.fillText(
+caption || t.bottom,
+350,
+1440
+);
+
+ctx.font="23px Arial";
+ctx.fillText("♡ DREAMY PHOTOBOOTH ♡",350,1480);
+
+}
+
+// DOWNLOAD
+
+function downloadPhoto(){
+
+const a=document.createElement("a");
+a.href=canvas.toDataURL("image/png");
+a.download="Dreamy-PhotoBooth.png";
+a.click();
+
+}
+
+// SAVE GALLERY
+
+function savePhoto(){
+
+try{
+
+const data=canvas.toDataURL("image/png");
+
+let gallery=JSON.parse(
+localStorage.getItem("dreamyGallery")||"[]"
+);
+
+gallery.unshift(data);
+
+localStorage.setItem(
+"dreamyGallery",
+JSON.stringify(gallery.slice(0,15))
+);
+
+showGallery();
+
+alert("Photo saved successfully! ♡");
+
+}catch(error){
+alert("Galeri penuh. Silakan download foto.");
+}
+
+}
+
+// SHOW GALLERY
+
+function showGallery(){
+
+const gallery=JSON.parse(
+localStorage.getItem("dreamyGallery")||"[]"
+);
+
+const area=document.getElementById("gallery");
+area.innerHTML="";
+
+gallery.forEach((image,index)=>{
+
+const box=document.createElement("div");
+
+const img=document.createElement("img");
+img.src=image;
+img.alt="Foto "+(index+1);
+
+img.onclick=()=>{
+const a=document.createElement("a");
+a.href=image;
+a.download="photo-"+(index+1)+".png";
+a.click();
+};
+
+const del=document.createElement("button");
+del.textContent="Hapus";
+del.onclick=()=>{
+
+if(confirm("Hapus foto ini?")){
+gallery.splice(index,1);
+
+localStorage.setItem(
+"dreamyGallery",
+JSON.stringify(gallery)
+);
+
+showGallery();
+}
+
+};
+
+box.appendChild(img);
+box.appendChild(del);
+area.appendChild(box);
+
+});
+
 }
 
 showGallery();
+
+window.addEventListener("beforeunload",()=>{
+if(stream){
+stream.getTracks().forEach(track=>track.stop());
+}
+});
 
 </script>
 
